@@ -17,7 +17,6 @@ import java.util.Collections;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 public abstract class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +37,9 @@ public abstract class User implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(this.userRole.name());
+        System.out.println(authority);
         return Collections.singleton(authority);
     }
 
@@ -109,4 +110,15 @@ public abstract class User implements UserDetails {
         return enabled;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", userRole=" + userRole +
+                ", locked=" + locked +
+                '}';
+    }
 }
