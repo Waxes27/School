@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.json.JSONObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,17 +14,18 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
-@Entity
+//@Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public abstract class User implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+
 
     private String username;
+    private String name;
+    private String surname;
+    private String idNumber;
     private String email;
     private String password;
     private boolean enabled = true;
@@ -110,15 +112,5 @@ public abstract class User implements UserDetails {
         return enabled;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", userRole=" + userRole +
-                ", locked=" + locked +
-                '}';
-    }
+
 }

@@ -1,5 +1,6 @@
 package com.waxes27.School.Controllers.auth.ConfirmationToken;
 
+import com.waxes27.School.Models.Student;
 import com.waxes27.School.Models.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,9 +28,9 @@ public class ConfirmationToken {
 
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
-    private User user;
+    private Student user;
 
-    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt, User user) {
+    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt, Student user) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;

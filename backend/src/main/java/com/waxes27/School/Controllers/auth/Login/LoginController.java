@@ -37,10 +37,8 @@ public class LoginController {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             System.out.println("Logging in");
-            jsonObject.put("status",HttpStatus.OK);
-            jsonObject.put("object",authentication.getPrincipal().toString());
 
-            return jsonObject.toString();
+            return authentication.getPrincipal().toString();
 
         }catch (Exception e){
             return e.getMessage();

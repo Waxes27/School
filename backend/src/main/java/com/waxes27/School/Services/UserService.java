@@ -1,7 +1,10 @@
 package com.waxes27.School.Services;
 
 import com.waxes27.School.Controllers.auth.ConfirmationToken.ConfirmationToken;
+import com.waxes27.School.Models.Student;
+import com.waxes27.School.Models.Teacher;
 import com.waxes27.School.Models.User;
+import com.waxes27.School.Repositories.TeacherRepository;
 import com.waxes27.School.Repositories.UserRepository;
 import com.waxes27.School.Repositories.auth.ConfirmationTokenRepository;
 import com.waxes27.School.Security.PasswordEncoder;
@@ -22,6 +25,8 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserRepository userRepository;
     @Autowired
+    TeacherRepository teacherRepository;
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -41,7 +46,6 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println(username);
         System.out.println(userRepository.findByUsername(username));
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
     }
@@ -66,8 +70,18 @@ public class UserService implements UserDetailsService {
         return "Confirmed";
     }
 
-    public String registerUser(User user){
+    public String registerStudent(Student user, String teacherName){
         ConfirmationToken confirmationToken = createConfirmationToken(user);
+        System.out.println("Looking for teacher...");
+        Optional<Teacher> teacherOptional = teacherRepository.findByName(teacherName);
+        if (teacherOptional.isPresent()){
+            user.setTeacherName(teacherName);
+            user.setTeacher(teacherOptional.get());
+        }
+        else {
+            throw new UsernameNotFoundException("No teacher by that name here");
+        }
+        System.out.println("Done");
 
 
         System.out.println(userRepository.save(user));
@@ -76,7 +90,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void enableUser(String email){
-        Optional<User> user = userRepository.findByEmail(email);
+        Optional<Student> user = userRepository.findByEmail(email);
 
         if (user.isEmpty()){
             throw new IllegalStateException("User not found!");
@@ -86,7 +100,7 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public ConfirmationToken createConfirmationToken(User user){
+    public ConfirmationToken createConfirmationToken(Student user){
         user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode(user.getPassword()));
 
 
@@ -96,5 +110,11 @@ public class UserService implements UserDetailsService {
                 LocalDateTime.now().plusMinutes(15),
                 user
         );
+    }
+
+    public String registerTeacher(Teacher user) {
+
+        System.out.println(teacherRepository.save(user));
+        return user.toString();
     }
 }
