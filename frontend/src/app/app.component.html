@@ -15,14 +15,14 @@
 <mat-drawer-container [hasBackdrop]="false">
   <mat-drawer #drawer class="drawer" mode="over">
 
-    <mat-card routerLink="login" routerLinkActive="router-link-active" >
+    <mat-card (click)="drawer.toggle()" routerLink="login" routerLinkActive="router-link-active" >
       <mat-card-header>
         <mat-card-title>Login</mat-card-title>
         <mat-card-subtitle>Users can login</mat-card-subtitle>
       </mat-card-header>
     </mat-card>
 
-    <mat-card routerLink="login">
+    <mat-card (click)="drawer.toggle()" routerLink="login">
       <mat-card-header>
         <mat-card-title>Registration</mat-card-title>
         <mat-card-subtitle>Register Users here</mat-card-subtitle>

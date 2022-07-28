@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/forms/login/login.component';
 import { StudentComponent } from './components/dashboards/student/student.component';
 import { TeacherComponent } from './components/dashboards/teacher/teacher.component';
+import { LoginService } from './service/auth/login.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,9 @@ import { TeacherComponent } from './components/dashboards/teacher/teacher.compon
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    LoginService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

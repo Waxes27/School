@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { json } from 'body-parser';
+import { Subscription } from 'rxjs';
+import { LoginService } from '../../../service/auth/login.service';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import { json } from 'body-parser';
 })
 export class LoginComponent implements OnInit {
   private submitted: boolean = false;
+  @Output() messageEvent = new EventEmitter<string>();
 
   loginForm = new FormGroup({
     username: new FormControl('', [<any>Validators.required]),
@@ -20,37 +22,29 @@ export class LoginComponent implements OnInit {
     ]),
   });
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private loginService: LoginService) {}
+  message:string = '';
+  subscription: Subscription = this.loginService.currentMessage.subscribe(message => this.message = message);
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscription = this.loginService.currentMessage.subscribe(message => this.message = message)
+  }
+
 
   onSubmit() {
     var formData: any = new FormData();
 
+
     formData.append('username', this.loginForm.get('username')?.value);
     formData.append('password', this.loginForm.get('password')?.value);
+    
 
-    this.http.post('http://localhost:8080/login', formData).subscribe({
-      next: (res) => {
+    this.loginService.login(formData)
 
-        switch (JSON.parse(JSON.parse(JSON.stringify(res))['object'])['userRole']){
-          case "STUDENT":
-            this.router.navigate(['/student-dashboard']);
-            break;
-          case "TEACHER":
-            this.router.navigate(['/teacher-dashboard']);
-            break
-          default:
-            console.log("FAILEd");
-
-        }
-
-
-
-
-
-      },
-      error: (res) => console.log(res),
-    });
   }
+
+
+
+
+
 }
