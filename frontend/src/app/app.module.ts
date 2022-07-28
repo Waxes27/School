@@ -13,11 +13,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/forms/login/login.component';
+import { StudentComponent } from './components/dashboards/student/student.component';
+import { TeacherComponent } from './components/dashboards/teacher/teacher.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    StudentComponent,
+    TeacherComponent
   ],
   imports: [
     BrowserModule,
