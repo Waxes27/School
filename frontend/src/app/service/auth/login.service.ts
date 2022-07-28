@@ -19,7 +19,7 @@ export class LoginService {
     this.http.post('http://localhost:8080/login', formData).subscribe({
       next: (res) => {
 
-        switch (JSON.parse(JSON.parse(JSON.stringify(res))['object'])['userRole']){
+        switch (JSON.parse(JSON.stringify(res))['userRole']){
           case "STUDENT":
             this.setUserJson(JSON.stringify(res))
             this.router.navigate(['/student-dashboard']);
