@@ -25,9 +25,9 @@
           <mat-card-header>
             <mat-card-subtitle>District: {{ user.role }}</mat-card-subtitle>
             <mat-card-subtitle>IMEI Number: {{ user.role }}</mat-card-subtitle>
-            <mat-card-subtitle>Register Teacher: {{ user.teacher.name }}</mat-card-subtitle>
-            <mat-card-subtitle>Register Teacher Role: {{ user.teacher.userRole }}</mat-card-subtitle>
-            <mat-card-subtitle>Register Teacher Contact email: <a [href]="emailString">{{ user.teacher.email }}</a></mat-card-subtitle>
+            <mat-card-subtitle>Register Teacher: {{ user.teacher?.name }}</mat-card-subtitle>
+            <mat-card-subtitle>Register Teacher Role: {{ user.teacher?.userRole }}</mat-card-subtitle>
+            <mat-card-subtitle>Register Teacher Contact email: <a [href]="emailString">{{ user.teacher?.email }}</a></mat-card-subtitle>
 
           </mat-card-header>
         </mat-card>

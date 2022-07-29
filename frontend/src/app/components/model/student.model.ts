@@ -5,7 +5,7 @@ export class Student {
   email: string = 'Test Email';
   role: string = 'STUDENT'
   name: string= 'Test Full Name'
-  teacher: Teacher = new Teacher("","","")
+  teacher: Teacher | undefined
 
   constructor(
     name      : string,

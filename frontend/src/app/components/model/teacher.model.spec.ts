@@ -1,4 +1,4 @@
-import { Teacher } from '../components/model/teacher.model';
+import { Teacher } from './teacher.model';
 
 describe('Teacher', () => {
   it('should create an instance', () => {
