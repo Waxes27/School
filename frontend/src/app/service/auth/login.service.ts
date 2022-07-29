@@ -21,6 +21,8 @@ export class LoginService {
 
         switch (JSON.parse(JSON.stringify(res))['userRole']){
           case "STUDENT":
+            console.log(res);
+
             this.setUserJson(JSON.stringify(res))
             this.router.navigate(['/student-dashboard']);
 
