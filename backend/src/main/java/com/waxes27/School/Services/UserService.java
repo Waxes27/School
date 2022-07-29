@@ -1,9 +1,9 @@
 package com.waxes27.School.Services;
 
 import com.waxes27.School.Controllers.auth.ConfirmationToken.ConfirmationToken;
-import com.waxes27.School.Models.Student;
-import com.waxes27.School.Models.Teacher;
-import com.waxes27.School.Models.User;
+import com.waxes27.School.Models.*;
+import com.waxes27.School.Repositories.PrincipalRepository;
+import com.waxes27.School.Repositories.SchoolRepository;
 import com.waxes27.School.Repositories.TeacherRepository;
 import com.waxes27.School.Repositories.UserRepository;
 import com.waxes27.School.Repositories.auth.ConfirmationTokenRepository;
@@ -24,6 +24,10 @@ import java.util.UUID;
 public class UserService implements UserDetailsService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PrincipalRepository principalRepository;
+    @Autowired
+    SchoolRepository schoolRepository;
     @Autowired
     TeacherRepository teacherRepository;
     @Autowired
@@ -113,8 +117,26 @@ public class UserService implements UserDetailsService {
     }
 
     public String registerTeacher(Teacher user) {
+        user.setSchool(
+                schoolRepository.findByName(user.getSchoolName()).get()
+        );
 
         System.out.println(teacherRepository.save(user));
         return user.toString();
+    }
+
+    public String registerSchool(School school){
+        Principal principal = principalRepository.save(
+                new Principal(
+                        "p",
+                        "p",
+                        "p",
+                        "p",
+                        "p"
+                ));
+        school.setPrincipal(principal);
+        ;
+
+        return schoolRepository.save(school).toString();
     }
 }

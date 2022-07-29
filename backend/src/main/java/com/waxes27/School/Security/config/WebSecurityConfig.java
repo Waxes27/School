@@ -14,13 +14,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import javax.servlet.http.HttpFilter;
-import java.util.AbstractMap;
-import java.util.List;
 
 @Configuration
 @AllArgsConstructor
@@ -56,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         UserRoles.ADMIN.name()
                 )
                 .antMatchers(HttpMethod.POST, "/api/v1/auth").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/auth/school").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/auth/*").permitAll()
                 .anyRequest()

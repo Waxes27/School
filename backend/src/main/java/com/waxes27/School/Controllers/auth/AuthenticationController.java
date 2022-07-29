@@ -1,6 +1,7 @@
 package com.waxes27.School.Controllers.auth;
 
 import com.waxes27.School.Enums.UserRoles;
+import com.waxes27.School.Models.School;
 import com.waxes27.School.Models.Student;
 import com.waxes27.School.Models.Teacher;
 import com.waxes27.School.Models.User;
@@ -59,6 +60,7 @@ public class AuthenticationController {
                     break;
                 case TEACHER:
                     Teacher teacher = new Teacher(
+                            "Prestige College",
                             name,
                             surname,
                             username,
@@ -76,5 +78,22 @@ public class AuthenticationController {
         }
 
         return response;
+    }
+
+    @PostMapping(path = "/school")
+    public String registerSchool(
+            @RequestParam("name") String name,
+            @RequestParam("imeiNumber") String imei,
+            @RequestParam("username") String username,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password){
+        School school = new School(name,
+                imei,
+                username,
+                email,
+                password);
+
+
+        return userService.registerSchool(school);
     }
 }

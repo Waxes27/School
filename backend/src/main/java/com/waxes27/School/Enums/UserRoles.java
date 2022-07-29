@@ -6,4 +6,6 @@ public enum UserRoles {
     TEACHER,
     PARENT,
     HOD,
+    SCHOOL,
+    PRINCIPAL
 }
